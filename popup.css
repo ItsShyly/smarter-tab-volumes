@@ -1,0 +1,512 @@
+/* ^^^ popup.css ^^^ */
+/* Structure and behavior styles for the popup interface */
+
+/* vvv CSS Variables vvv */
+:root {
+  /* >>> Spacing variables */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  
+  /* >>> Size variables */
+  --popup-width: 320px;
+  --popup-padding: 16px;
+  --slider-height: 4px;
+  --slider-thumb-size: 18px;
+  --button-height: 32px;
+  --button-width: 60px;
+  
+  /* >>> Font variables */
+  --font-size-xs: 10px;
+  --font-size-sm: 11px;
+  --font-size-md: 13px;
+  --font-size-lg: 14px;
+  
+  /* >>> Border variables */
+  --border-radius-sm: 8px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 14px;
+
+  
+  /* >>> Transition variables */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  
+  /* >>> Styling Colors */
+  --color-text: #fcfcfc;
+  --color-text-off: rgba(255, 255, 255, 0.2);
+  --color-button-active: #ff4aae;
+  --color-delete-btn: rgba(255, 255, 255, 0.2);
+  --color-delete-btn-hover: #d32f2f;
+  --color-main: rgb(31, 31, 31);
+  --color-secondary: rgba(255, 255, 255, 0.08);
+  --color-tertiary: rgba(255, 255, 255, 0.1);
+  --color-button-bg: rgba(255, 255, 255, 0.05);
+  --color-slider-track: rgba(255, 255, 255, 0.2);
+  --color-slider-thumb: #ff4aae;
+  --color-slider-thumb-hover: #ff4aae;
+  --color-slider-thumb-border: rgb(73, 73, 73);
+  --color-border: rgba(255, 255, 255, 0.12);
+}
+
+/* vvv Base Styles vvv */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  font-family: 'Segoe UI Variable', 'Segoe UI', sans-serif;
+  font-size: var(--font-size-md);
+  overflow: hidden;
+  user-select: none;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: var(--color-main);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: var(--popup-padding);
+  color: #f3f3f3;
+}
+
+/* vvv Popup Container vvv */
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* vvv Section Styles vvv */
+.popup__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.popup__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  padding: var(--spacing-xs) 0;
+  height: 10px;
+}
+
+.popup__header:hover .popup__expand-icon {
+  opacity: 0.8;
+}
+
+.popup__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  transition: opacity var(--transition-fast);
+}
+
+.popup__expand-icon {
+  font-size: 16px;
+  transition: transform var(--transition-fast);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.popup__expand-icon.expanded {
+  transform: rotate(180deg);
+}
+
+/* vvv Subsection Styles vvv */
+.popup__subsection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.popup__subsection:last-child {
+  margin-bottom: 0;
+}
+
+/* vvv Collapsible Content vvv */
+.popup__content {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--transition-normal);
+}
+
+.popup__content.collapsed {
+  grid-template-rows: 0fr;
+}
+
+.popup__content-inner {
+  overflow: hidden;
+}
+
+/* vvv Controls Layout vvv */
+.popup__controls {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start; /* Align to top so we can control individual alignment */
+}
+
+/* vvv Icon Button (for mute toggle and tab icons) vvv */
+.popup__icon-btn {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  padding: 0;
+  flex-shrink: 0;
+  margin-top: 0; /* Align with slider top */
+}
+
+.popup__icon-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.popup__icon-btn:active {
+  transform: scale(0.95);
+}
+
+.popup__icon-btn.muted {
+  opacity: 0.1;
+}
+
+.popup__icon-btn svg {
+  color: white;
+  stroke: white;
+}
+
+.popup__tab-favicon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.popup__slider-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  align-items: center; /* Center percentage text horizontally below slider */
+  /* Slider wrapper will center itself, text will be below */
+}
+
+.popup__slider-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Full width so slider takes full space */
+  height: 24px; /* Match icon height for vertical alignment */
+}
+
+
+
+/* vvv Tab List Styles vvv */
+.popup__tab-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: var(--spacing-xs);
+}
+
+.popup__tab-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-button-bg);
+}
+
+.popup__tab-title {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* vvv Synced Volumes List Styles vvv */
+.popup__synced-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-height: 150px;
+  overflow-y: auto;
+  padding-right: var(--spacing-xs);
+}
+
+.popup__synced-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-button-bg);
+}
+
+.popup__synced-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  justify-content: space-between;
+}
+
+.popup__synced-pattern {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.popup__delete-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+  color: white;
+  background: var(--color-delete-btn);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup__delete-btn:hover {
+  background: var(--color-delete-btn-hover);
+  transform: scale(1.1);
+}
+
+.popup__delete-btn:active {
+  transform: scale(0.95);
+}
+
+/* vvv Slider Styles (Windows 11 style) vvv */
+.popup__slider {
+  width: 100%;
+  height: var(--slider-height);
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: var(--border-radius-lg);
+  background: transparent;
+  position: relative;
+  margin: 0;
+  /* Remove the absolute positioning */
+  position: static;
+  top: auto;
+  transform: none;
+}
+
+/* >>> Webkit slider track (background) */
+.popup__slider::-webkit-slider-track {
+  width: 100%;
+  height: var(--slider-height);
+  background: var(--color-slider-track);
+  border-radius: var(--border-radius-lg);
+}
+
+/* >>> Webkit filled track (Windows 11 style) */
+.popup__slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: var(--slider-height);
+  background: linear-gradient(
+    to right,
+    var(--color-slider-thumb) 0%,
+    var(--color-slider-thumb) var(--value-percent, 50%),
+    var(--color-slider-track) var(--value-percent, 50%),
+    var(--color-slider-track) 100%
+  );
+  border-radius: var(--border-radius-lg);
+}
+
+/* >>> Firefox slider track */
+.popup__slider::-moz-range-track {
+  width: 100%;
+  height: var(--slider-height);
+  background: var(--color-slider-track);
+  border-radius: var(--border-radius-lg);
+}
+
+/* >>> Firefox filled track (Windows 11 style) */
+.popup__slider::-moz-range-progress {
+  background-color: var(--color-slider-thumb);
+  height: var(--slider-height);
+  border-radius: var(--border-radius-lg);
+}
+
+/* >>> Webkit slider thumb */
+.popup__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--color-slider-thumb);
+  border: 4px solid var(--color-slider-thumb-border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+  margin-top: calc((var(--slider-height) - var(--slider-thumb-size)) / 2);
+}
+
+/* >>> Firefox slider thumb */
+.popup__slider::-moz-range-thumb {
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--color-slider-thumb);
+  border: 4px solid var(--color-slider-thumb-border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+/* >>> Thumb hover effect */
+.popup__slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  background: var(--color-slider-thumb-hover);
+  border: 2px solid var(--color-slider-thumb-border);
+}
+
+.popup__slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  background: var(--color-slider-thumb-hover);
+  border: 2px solid var(--color-slider-thumb-border);
+
+}
+
+/* >>> Thumb active effect */
+.popup__slider::-webkit-slider-thumb:active {
+  transform: scale(1.1);
+  border: 2px solid var(--color-slider-thumb-border);
+
+}
+
+.popup__slider::-moz-range-thumb:active {
+  transform: scale(1.1);
+  border: 2px solid var(--color-slider-thumb-border);
+}
+
+/* vvv Value Display vvv */
+.popup__value {
+  font-size: var(--font-size-sm); /* Fixed font size */
+  font-weight: 500;
+  text-align: left; /* Align text to the left, not centered */
+  /* Remove absolute positioning */
+  position: static;
+  top: auto;
+  left: auto;
+  transform: none;
+  margin: 0;
+  line-height: 1;
+}
+/* vvv Sync Toggle vvv */
+.popup__sync-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  padding: 5px;
+}
+
+.popup__sync-label {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-off);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: absolute;
+  bottom: -14px; /* Position label below toggle */
+  white-space: nowrap;
+}
+
+.popup__sync-toggle {
+  width: 32px;
+  height: 18px;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  flex-shrink: 0;
+  background: var(--color-slider-track);
+  position: relative;
+  padding: 0;
+}
+
+.popup__sync-toggle::before {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-slider-track);
+  top: 2px;
+  left: 2px;
+  transition: all var(--transition-normal);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.popup__sync-toggle:hover::before {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.popup__sync-toggle:active::before {
+  width: 16px;
+}
+
+.popup__sync-toggle[data-active="true"] {
+  background: var(--color-button-active);
+}
+
+.popup__sync-toggle[data-active="true"]::before {
+  left: 16px;
+}
+
+.popup__sync-toggle[data-active="true"]:active::before {
+  left: 14px;
+}
+
+/* vvv Scrollbar Styles vvv */
+.popup__tab-list::-webkit-scrollbar,
+.popup__synced-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.popup__tab-list::-webkit-scrollbar-track,
+.popup__synced-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.popup__tab-list::-webkit-scrollbar-thumb,
+.popup__synced-list::-webkit-scrollbar-thumb {
+  background: var(--color-slider-track);
+  border-radius: var(--border-radius-lg);
+}
+
+.popup__tab-list::-webkit-scrollbar-thumb:hover,
+.popup__synced-list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slider-thumb);
+}

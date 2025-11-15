@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Smarter Tab Volumes",
+  "version": "1.0",
+  "description": "Control any tab's volume, or sync a site's volume and have it saved and retrieved automatically forever.",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["volume-injector.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "on-16.png",
+      "48": "on-48.png",
+      "128": "on-128.png"
+    }
+  },
+  "commands": {
+    "toggle-mute-current-tab": {
+      "suggested_key": {
+        "default": "Ctrl+M"
+      },
+      "description": "Toggle mute for current tab"
+    }
+  },
+  "icons": {
+    "16": "icon16.svg",
+    "48": "icon48.svg",
+    "128": "icon128.svg"
+  }
+}

@@ -1,0 +1,19 @@
+# Build output
+dist/
+
+# Node modules (if you add dependencies later)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+/minify.js
+/package.json
+/package-lock.json

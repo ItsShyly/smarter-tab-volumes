@@ -1,0 +1,7 @@
+<!-- ^^^ icon128.svg ^^^ -->
+<!-- Simple volume icon for 128x128 size -->
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <path d="M26 42v44h22l26 22V20L48 42H26z" fill="#5f6368"/>
+  <path d="M90 40c8 8 8 16 8 24s0 16-8 24" stroke="#5f6368" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M100 28c14 14 14 26 14 36s0 22-14 36" stroke="#5f6368" stroke-width="6" fill="none" stroke-linecap="round"/>
+</svg>

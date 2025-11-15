@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Volume Controller</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- vvv Main Container vvv -->
+  <div class="popup">
+    <!-- vvv Current Tab Section vvv -->
+    <div class="popup__section">
+      <!-- >>> Current tab volume control -->
+      <div class="popup__header">
+        <h3 class="popup__title">Current Tab</h3>
+      </div>
+      <div class="popup__controls">
+        <!-- >>> Speaker icon button for current tab -->
+        <button id="currentTabMuteBtn" class="popup__icon-btn" title="Mute/Unmute tab">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+        <div class="popup__slider-container">
+          <!-- >>> Slider for current tab volume -->
+          <div class="popup__slider-wrapper">
+            <input 
+              type="range" 
+              id="currentTabSlider" 
+              class="popup__slider" 
+              min="0" 
+              max="400" 
+              value="100" 
+              step="1"
+            >
+          </div>
+          <!-- >>> Volume percentage -->
+          <span id="currentTabValue" class="popup__value">100%</span>
+        </div>
+        <!-- >>> Sync toggle-->
+        <div class="popup__sync-wrapper">
+          <span class="popup__sync-label">Sync</span>
+          <button id="currentTabSync" class="popup__sync-toggle" data-active="false"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- vvv All Other Controls Section vvv -->
+    <div class="popup__section">
+      <!-- >>> Collapsible header for all other controls -->
+      <div class="popup__header" id="allControlsHeader">
+        <span class="popup__expand-icon">⌄</span>
+      </div>
+      <!-- >>> Container for all collapsible content -->
+      <div class="popup__content collapsed" id="allControlsContent">
+        <div class="popup__content-inner">
+          <!-- >>> Synced Volumes Subsection -->
+          <div class="popup__subsection">
+            <h3 class="popup__title">Synced Websites</h3>
+            <div id="syncedVolumesList" class="popup__synced-list">
+              <!-- >>> Synced volumes will be dynamically inserted here -->
+            </div>
+          </div>
+          
+          <!-- >>> Other Tabs Subsection -->
+          <div class="popup__subsection">
+            <h3 class="popup__title">Other Tabs</h3>
+            <div id="otherTabsList" class="popup__tab-list">
+              <!-- >>> Tabs will be dynamically inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- vvv Scripts vvv -->
+  <script src="storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

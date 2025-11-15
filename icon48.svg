@@ -1,0 +1,7 @@
+<!-- ^^^ icon48.svg ^^^ -->
+<!-- Simple volume icon for 48x48 size -->
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 16v16h8l10 8V8l-10 8h-8z" fill="#5f6368"/>
+  <path d="M34 15c3 3 3 6 3 9s0 6-3 9" stroke="#5f6368" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M38 11c5 5 5 10 5 13s0 8-5 13" stroke="#5f6368" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>
