@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Smarter Tab Volumes",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Control any tab's volume, or sync a site's volume and have it saved and retrieved automatically forever.",
   "permissions": [
     "activeTab",
