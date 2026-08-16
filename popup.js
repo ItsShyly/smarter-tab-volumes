@@ -486,6 +486,12 @@ async function renderOtherTabs() {
       updateOtherTabVolume(tab.id, slider, valueDisplay);
     });
     
+    // >>> Double-click slider to set to 100%
+    slider.addEventListener('dblclick', async () => {
+      slider.value = volumeToSlider(100);
+      await updateOtherTabVolume(tab.id, slider, valueDisplay);
+    });
+    
     sliderWrapper.appendChild(slider);
     sliderContainer.appendChild(sliderWrapper);
     sliderContainer.appendChild(valueDisplay);
@@ -642,6 +648,33 @@ async function renderSyncedVolumes() {
       }
     });
     
+    // >>> Double-click slider to set to 100%
+    slider.addEventListener('dblclick', async () => {
+      slider.value = volumeToSlider(100);
+      const sliderValue = parseInt(slider.value);
+      const volumePercent = sliderToVolume(sliderValue);
+      volumeText.textContent = `${volumePercent}%`;
+      
+      updateSliderFill(slider);
+      
+      await VolumeSettings.syncWebsiteVolume(pattern, volumePercent);
+      
+      const domain = pattern.split('/')[0];
+      const sameDomainTabs = await getTabsWithSameDomain(domain);
+      for (const tab of sameDomainTabs) {
+        await applyVolumeToTab(tab.id, volumePercent);
+        await VolumeSettings.syncTabVolume(tab.id, volumePercent);
+      }
+      
+      const currentTab = await getCurrentTab();
+      const currentDomain = extractDomain(currentTab.url);
+      if (currentDomain === domain) {
+        currentTabSlider.value = volumeToSlider(volumePercent);
+        currentTabValue.textContent = `${volumePercent}%`;
+        updateSliderFill(currentTabSlider);
+      }
+    });
+    
     sliderWrapper.appendChild(slider);
     sliderContainer.appendChild(sliderWrapper);
     sliderContainer.appendChild(volumeText);
@@ -778,6 +811,12 @@ function updateSliderFill(slider) {
 currentTabSlider.addEventListener('input', updateCurrentTabVolume);
 currentTabSyncBtn.addEventListener('click', toggleCurrentTabSync);
 
+// >>> Double-click slider to set to 100%
+currentTabSlider.addEventListener('dblclick', async () => {
+  currentTabSlider.value = volumeToSlider(100);
+  await updateCurrentTabVolume();
+});
+
 // >>> Initialize on popup open
 initializePopup();
 
@@ -830,5 +869,3 @@ async function setupCurrentTabMuteButton() {
 
 // And now initialize current tab mute button
 setupCurrentTabMuteButton();
-
-
