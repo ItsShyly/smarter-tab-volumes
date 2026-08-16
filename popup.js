@@ -130,36 +130,10 @@ async function applyVolumeToTab(tabId, volumePercent) {
           return element._volumeControllerId;
         }
         
-        // >>> Disconnect and cleanup audio control for an element
-        function disconnectAudioControl(element) {
-          const elemId = getElementId(element);
-          const existing = window.volumeController.elements.get(elemId);
-          
-          if (existing && existing.gainNode) {
-            try {
-              // Disconnect the source from the gain node
-              existing.source.disconnect();
-              existing.gainNode.disconnect();
-            } catch (error) {
-            }
-          }
-          
-          // Remove from tracking
-          window.volumeController.elements.delete(elemId);
-        }
-        
         // >>> Setup audio control for an element
         function setupAudioControl(element) {
           const elemId = getElementId(element);
           const existing = window.volumeController.elements.get(elemId);
-          
-          // >>> If gain is 1.0 (100%), disconnect Web Audio and use native controls
-          if (window.volumeController.targetGain === 1.0) {
-            if (existing && (existing.gainNode || existing.fallback)) {
-              disconnectAudioControl(element);
-            }
-            return;  // <<< Let website control volume naturally
-          }
           
           // >>> If already setup with Web Audio, just update gain
           if (existing && existing.gainNode) {
