@@ -1,17 +1,10 @@
 {
   "manifest_version": 3,
   "name": "Smarter Tab Volumes",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Control any tab's volume, or sync a site's volume and have it saved and retrieved automatically forever.",
-  "permissions": [
-    "activeTab",
-    "tabs",
-    "storage",
-    "scripting"
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "permissions": ["activeTab", "tabs", "storage", "scripting"],
+  "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },

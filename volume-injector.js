@@ -88,32 +88,9 @@
           return element._volumeControllerId;
         }
         
-        function disconnectAudioControl(element) {
-          const elemId = getElementId(element);
-          const existing = window.volumeController.elements.get(elemId);
-          
-          if (existing && existing.gainNode) {
-            try {
-              existing.source.disconnect();
-              existing.gainNode.disconnect();
-            } catch (error) {
-              // Ignore
-            }
-          }
-          
-          window.volumeController.elements.delete(elemId);
-        }
-        
         function setupAudioControl(element) {
           const elemId = getElementId(element);
           const existing = window.volumeController.elements.get(elemId);
-          
-          if (window.volumeController.targetGain === 1.0) {
-            if (existing && (existing.gainNode || existing.fallback)) {
-              disconnectAudioControl(element);
-            }
-            return;
-          }
           
           if (existing && existing.gainNode) {
             existing.gainNode.gain.value = window.volumeController.targetGain;
